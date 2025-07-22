@@ -1,26 +1,29 @@
-# .gitpod.yml を更新
+# .gitpod.yml
 tasks:
-  - name: Setup Development Environment
+  - init: |
+      # 初回ビルド時に実行
+      npm install -g @anthropic-ai/claude-code
+      pip install duckduckgo-search
     command: |
-      # Claude Codeのインストール
+      # 毎回のワークスペース起動時に実行
+      echo "✅ Workspace ready!"
+      
+      # Claude Codeの再インストール（必要に応じて）
       if ! command -v claude &> /dev/null; then
-        echo "Installing Claude Code..."
         npm install -g @anthropic-ai/claude-code
       fi
       
-      # Python依存関係のインストール
-      if [ -f "requirements.txt" ]; then
-        pip install -r requirements.txt
-      fi
-      
-      # AGNOプロジェクト特有の依存関係
-      pip install duckduckgo-search
-      
-      echo "✅ All setup complete!"
-      echo "🚀 Type 'claude' to start Claude Code"
+      gp sync-done setup
 
 vscode:
   extensions:
     - saoudrizwan.claude-dev
 
 workspaceTimeout: 6h
+
+# Prebuildsを有効化
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
