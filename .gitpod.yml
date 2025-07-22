@@ -1,0 +1,16 @@
+# .gitpod.yml
+tasks:
+  - name: Setup Claude Code
+    command: |
+      # 毎回実行される
+      if ! command -v claude &> /dev/null; then
+        echo "Installing Claude Code..."
+        npm install -g @anthropic-ai/claude-code
+      fi
+      echo "✅ Claude Code ready! Type 'claude' to start"
+
+vscode:
+  extensions:
+    - saoudrizwan.claude-dev
+
+workspaceTimeout: 4h
