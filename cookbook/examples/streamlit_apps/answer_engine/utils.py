@@ -1,10 +1,22 @@
 from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
 
 import streamlit as st
 from agents import get_sage
 from agno.agent.agent import Agent
-from agno.models.response import ToolExecution
 from agno.utils.log import logger
+
+# Handle import error for older agno versions
+try:
+    from agno.models.response import ToolExecution
+except ImportError:
+    # Create a fallback ToolExecution class for compatibility
+    @dataclass
+    class ToolExecution:
+        tool_name: Optional[str] = None
+        tool_args: Optional[Dict[str, Any]] = None
+        result: Optional[str] = None
+        metrics: Optional[Dict[str, Any]] = None
 
 
 def add_message(

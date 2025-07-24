@@ -41,11 +41,14 @@ def main() -> None:
     # Model selector
     ####################################################################
     model_options = {
-        "llama-3.3-70b": "groq:llama-3.3-70b-versatile",
-        "gpt-4o": "openai:gpt-4o",
+        "Claude 4 Sonnet": "anthropic:claude-sonnet-4-20250514",
+        "Claude 4 Opus": "anthropic:claude-opus-4-20250514",
+        "GPT-4o": "openai:gpt-4o",
+        "o3": "openai:o3",
         "o3-mini": "openai:o3-mini",
-        "gemini-2.0-flash-exp": "google:gemini-2.0-flash-exp",
-        "claude-3-5-sonnet": "anthropic:claude-3-5-sonnet-20241022",
+        "o4-mini": "openai:o4-mini",
+        "Llama 3.3 70B": "groq:llama-3.3-70b-versatile",
+        "Gemini 2.0 Flash": "google:gemini-2.0-flash-exp",
     }
     selected_model = st.sidebar.selectbox(
         "Choose a model",

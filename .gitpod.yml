@@ -1,29 +1,39 @@
-# .gitpod.yml
+# Gitpod + Cursor + Cline 完全自動化設定 (v2)
+
 tasks:
-  - init: |
-      # 初回ビルド時に実行
-      npm install -g @anthropic-ai/claude-code
-      pip install duckduckgo-search
-    command: |
-      # 毎回のワークスペース起動時に実行
-      echo "✅ Workspace ready!"
-      
-      # Claude Codeの再インストール（必要に応じて）
-      if ! command -v claude &> /dev/null; then
-        npm install -g @anthropic-ai/claude-code
-      fi
-      
+  - name: Setup
+    init: |
+      # 永続化と拡張機能インストールのためのセットアップスクリプトを実行
+      chmod +x .gitpod/setup.sh
+      .gitpod/setup.sh
       gp sync-done setup
+    command: |
+      # .bashrcを読み込み、エイリアスを有効化
+      source ~/.bashrc
+      clear
+      
+      echo "================================================================"
+      echo "✅ Gitpod環境の準備が完了しました。"
+      echo ""
+      echo "   次のコマンドでCursorへのSSH接続情報を確認できます："
+      echo ""
+      echo "      cursor-ssh"
+      echo ""
+      echo "================================================================"
 
-vscode:
-  extensions:
-    - saoudrizwan.claude-dev
+# 公開するポート
+ports:
+  - port: 3000-8999
+    onOpen: ignore
 
-workspaceTimeout: 6h
+# ワークスペースのタイムアウト設定
+workspaceTimeout: 12h
 
-# Prebuildsを有効化
+# Prebuild設定
 github:
   prebuilds:
     master: true
     branches: true
     pullRequests: true
+    pullRequestsFromForks: true
+    addBadge: true
